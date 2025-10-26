@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aidem 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #6B0000, #3D0000, #8B0000, #4A0000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Uçan ürəklər */
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: float 15s infinite;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Ulduz container */
+        #starContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            transition: opacity 1s;
+        }
+
+        #starContainer.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Parlayan ulduz */
+        .star {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #FFD700, #FFA500, #FF8C00);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            cursor: pointer;
+            animation: pulse 2s infinite, rotate 4s linear infinite;
+            box-shadow: 0 0 100px #FFD700, 0 0 180px #FFA500, 0 0 250px #FF8C00, 0 0 300px #FFD700;
+            transition: transform 0.3s;
+            filter: brightness(1.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .star:hover {
+            transform: scale(1.1);
+        }
+
+        .star-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hearts {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .heart-emoji {
+            font-size: 28px;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .heart-emoji.small {
+            font-size: 20px;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .star-letter {
+            font-size: 48px;
+            font-weight: 900;
+            color: #8B0000;
+            text-shadow: 0 0 15px rgba(139, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.5);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            display: inline-block;
+            animation: letterPulse 2s ease-in-out infinite;
+        }
+
+        .star-letter-left {
+            margin-right: 5px;
+        }
+
+        .star-letter-right {
+            margin-left: 5px;
+        }
+
+        @keyframes letterPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                filter: brightness(1.5);
+            }
+            50% {
+                filter: brightness(2);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Fişəng partlama */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+
+        /* Mətn animasiyası */
+        #loveText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 56px;
+            color: #FFD700;
+            font-weight: 900;
+            text-shadow: 0 0 30px #FFA500, 0 0 60px #FF8C00, 0 0 90px #FFD700;
+            opacity: 0;
+            z-index: 15;
+            text-align: center;
+            animation: fadeInOut 3s forwards;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+
+        /* Plak diski */
+        #vinylContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 1s ease-in-out;
+            z-index: 20;
+        }
+
+        #vinylContainer.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #vinylContainer.mini {
+            top: 70px;
+            left: 70px;
+            transform: translate(0, 0) scale(0.35);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .vinyl {
+            width: 250px;
+            height: 250px;
+            background: 
+                radial-gradient(circle at 50% 50%, #1a1a1a 15%, transparent 15.5%),
+                radial-gradient(circle at 50% 50%, #0a0a0a 16%, transparent 16.5%),
+                repeating-radial-gradient(circle at 50% 50%, 
+                    #1a1a1a 0px, 
+                    #0d0d0d 1px, 
+                    #1a1a1a 2px, 
+                    #0d0d0d 3px),
+                radial-gradient(circle at 50% 50%, #000 0%, #1a1a1a 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.8);
+            border: 3px solid #0a0a0a;
+        }
+
+        .vinyl:hover {
+            transform: scale(1.05);
+        }
+
+        .vinyl.spinning {
+            animation: spin 2s linear infinite;
+        }
+
+        .vinyl::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #8B0000, #A52A2A, #8B0000);
+            border-radius: 50%;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7), 0 0 10px rgba(139, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .vinyl::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+            z-index: 2;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Tonearm (qulp/iynə) */
+        .tonearm {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 6px;
+            background: linear-gradient(90deg, #1a1a1a, #2c2c2c);
+            border-radius: 3px;
+            transform-origin: 0% center;
+            transform: translate(-50%, -50%) rotate(35deg);
+            transition: transform 0.8s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        .tonearm::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 18px solid #E8E8E8;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+        }
+
+        .tonearm::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #2a2a2a, #0a0a0a);
+            border-radius: 50%;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.6);
+            border: 2px solid #1a1a1a;
+        }
+
+        .tonearm.playing {
+            transform: translate(-50%, -50%) rotate(5deg);
+        }
+
+        .tonearm:hover {
+            filter: brightness(1.2);
+        }
+
+        /* Zərf (envelope) */
+        #envelopeContainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 30;
+        }
+
+        #envelopeContainer.visible {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .envelope {
+            width: 400px;
+            height: 280px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-back {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            border-radius: 5px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(180deg, #A52A2A, #8B0000);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top center;
+            transition: transform 0.8s ease;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-seal {
+            position: absolute;
+            top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Köhnə kağız zərf (məktub) */
+        #letterContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 80%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 90%;
+            max-width: 600px;
+            z-index: 4;
+        }
+
+        .envelope.open #letterContainer {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -20%);
+        }
+
+        .letter {
+            background: linear-gradient(135deg, #F5E6D3, #F0E8D8, #E8D7C3);
+            position: relative;
+            min-height: 600px;
+            width: 100%;
+            overflow-y: auto;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 4px solid #C19A6B;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Zərf üst hissəsi (açılan qapaq) */
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 45px;
+            background: linear-gradient(180deg, #D2B48C, #C19A6B);
+            border-bottom: 2px solid #A0826D;
+            box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        /* Zərf alt hissəsi */
+        .letter::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 45px;
+            background: linear-gradient(0deg, #C19A6B, #D2B48C);
+            border-top: 2px solid #A0826D;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .letter-content-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            padding: 55px 40px 55px 40px;
+            background: 
+                linear-gradient(135deg, #FFF8DC 0%, #FAEBD7 100%);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(139, 69, 19, 0.08) 31px, rgba(139, 69, 19, 0.08) 32px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .letter-content {
+            font-size: 13px;
+            line-height: 1.55;
+            color: #3d2817;
+            text-align: justify;
+            font-family: 'Georgia', serif;
+            max-height: 100%;
+            overflow: visible;
+        }
+
+        .letter-content strong {
+            color: #8B0000;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .letter-content p {
+            margin-bottom: 12px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #A52A2A;
+            transform: rotate(90deg);
+        }
+
+        /* Audio player gizli */
+        #audioPlayer {
+            display: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .star {
+                width: 120px;
+                height: 120px;
+            }
+
+            .heart-emoji {
+                font-size: 20px;
+            }
+
+            .heart-emoji.small {
+                font-size: 14px;
+            }
+
+            .star-letter {
+                font-size: 32px;
+            }
+
+            #loveText {
+                font-size: 32px;
+                padding: 0 20px;
+            }
+
+            #vinylContainer.mini {
+                top: 60px;
+                left: 60px;
+                transform: translate(0, 0) scale(0.3);
+            }
+
+            .vinyl {
+                width: 200px;
+                height: 200px;
+            }
+
+            .tonearm {
+                width: 110px;
+                height: 5px;
+            }
+
+            .tonearm::after {
+                width: 25px;
+                height: 25px;
+            }
+
+            .envelope {
+                width: 90vw;
+                max-width: 350px;
+                height: 240px;
+            }
+
+            .envelope-flap {
+                height: 120px;
+            }
+
+            .envelope-seal {
+                top: 55px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            #letterContainer {
+                width: 95%;
+                max-width: 100%;
+            }
+
+            .letter::before,
+            .letter::after {
+                height: 35px;
+            }
+
+            .letter {
+                min-height: 500px;
+            }
+
+            .letter-content-wrapper {
+                padding: 45px 25px 45px 25px;
+            }
+
+            .letter-content {
+                font-size: 11px;
+                line-height: 1.5;
+            }
+
+            .letter-content strong {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .letter-content p {
+                margin-bottom: 8px;
+            }
+
+            .close-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+            }
+
+            .heart {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .star {
+                width: 100px;
+                height: 100px;
+            }
+
+            .heart-emoji {
+                font-size: 18px;
+            }
+
+            .heart-emoji.small {
+                font-size: 12px;
+            }
+
+            .star-letter {
+                font-size: 28px;
+            }
+
+            #loveText {
+                font-size: 24px;
+            }
+
+            .envelope {
+                width: 95vw;
+                height: 200px;
+            }
+
+            .envelope-flap {
+                height: 100px;
+            }
+
+            .letter::before,
+            .letter::after {
+                height: 30px;
+            }
+
+            .letter {
+                min-height: 450px;
+            }
+
+            .letter-content-wrapper {
+                padding: 38px 18px 38px 18px;
+            }
+
+            .letter-content {
+                font-size: 10px;
+                line-height: 1.45;
+            }
+
+            .letter-content strong {
+                font-size: 12px;
+            }
+
+            .letter-content p {
+                margin-bottom: 6px;
+            }
+
+            #vinylContainer.mini {
+                top: 50px;
+                left: 50px;
+                transform: translate(0, 0) scale(0.25);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Uçan ürəklər -->
+    <div id="heartsContainer"></div>
+
+    <!-- Ulduz -->
+    <div id="starContainer">
+        <div class="star" id="star">
+            <div class="star-content">
+                <div class="hearts">
+                    <span class="heart-emoji">❤️</span>
+                    <span class="heart-emoji small">❤️</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mətn -->
+    <div id="loveText" style="display: none;">Aidəm səni çox sevirəm</div>
+
+    <!-- Plak diski -->
+    <div id="vinylContainer">
+        <div class="vinyl" id="vinyl"></div>
+        <div class="tonearm" id="tonearm"></div>
+    </div>
+
+    <!-- Zərf -->
+    <div id="envelopeContainer">
+        <div class="envelope" id="envelope">
+            <div class="envelope-back">
+                <div class="envelope-seal">💕</div>
+                <div class="envelope-flap"></div>
+                <!-- Köhnə kağız zərf (məktub) -->
+                <div id="letterContainer">
+                    <div class="letter">
+                        <button class="close-btn" id="closeBtn">×</button>
+                        <div class="letter-content-wrapper">
+                            <div class="letter-content">
+                <p><strong>Aidəm,</strong></p>
+                <p>Mənim həyatımın mənası, 2 il 6 ayımız oldu. Səninlə keçirdiyim hər saniyəm, hər saatım dünən kimi yadımdadı. Hələ bunlar nə diki, inşallah bunların üstündən illər keçəcək, bu günlərimizi uşaqlarımıza danışacağıq, özümüz xatirələrimizi gözümüzün qabağından keçirdəcək. Səninlə çox xoşbəxt günlərimiz olacaq aşkım, səni çox sevirəm.</p>
+                <p>Bunu düzəldəndə saat indi 6 idi, bəlkə saat 9 bunu qurtardım. Sən də evə gələndə baxacaqsan. İnanısan, indi bura nə yazacağımı bilmirəm artıq. Səninlə bu anlarımızı yanası sevişərək, öpüşərək, bir-birimizin yanında olaraq keçirtmək istəyirəm.</p>
+                <p>Amma indi bu olmur deyə də pis olmuram, çünki bilirəm ki az qalıb səni qoxunu içimə çəkəcəyim, günə dəli kimi sevişəcəyimizə. Aidəm səni çox sevirəm, sənə bu sözü nə qədər desəm azdı.</p>
+                <p>Sənə bundan əlavə bir də sürprizim var, inşallah onu da alındırıb düzəldəcəm. Sürprizim - səninlə oynadığımız bir oyun vardı, yadındadı? Rəqəmləri tapırdıq, o oyunu düzəldəcəm, online oynayacağıq.</p>
+                <p>Hadi mən çox yazdım, başdığım day bunları tamamlamağa. Öpdüm bal dodağından, səninlə hələ biz nələr yaşayacağıq nələr, inşallah Allahın köməyi ilə.</p>
+                                <p style="text-align: right; margin-top: 30px;"><em>Sənin sevgilinlə 💕</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio player -->
+    <audio id="audioPlayer" loop>
+        <source src="assets/Ayaz Babayev ft. Aslixan — Nə Üçün Belə (Rəsmi Musiqi Videosu).mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Rəngbərəng ürəklər yaratmaq
+        const heartsContainer = document.getElementById('heartsContainer');
+        const heartColors = ['#FF69B4', '#FF1493', '#C71585', '#DB7093', '#FFB6C1', '#FFC0CB'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+            heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+
+        // Ürəkləri davamlı yaratmaq (daha çox)
+        setInterval(createHeart, 300);
+        for (let i = 0; i < 40; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+
+        // Ulduz partlama
+        const star = document.getElementById('star');
+        const starContainer = document.getElementById('starContainer');
+        const loveText = document.getElementById('loveText');
+        const vinylContainer = document.getElementById('vinylContainer');
+        const vinyl = document.getElementById('vinyl');
+        const envelopeContainer = document.getElementById('envelopeContainer');
+        const envelope = document.getElementById('envelope');
+        const letterContainer = document.getElementById('letterContainer');
+        const closeBtn = document.getElementById('closeBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const tonearm = document.getElementById('tonearm');
+
+        star.addEventListener('click', function() {
+            // Fişəng partlaması
+            createFireworks();
+            
+            // Mətni göstər
+            loveText.style.display = 'block';
+            
+            // Ulduzun özünü gizlət
+            starContainer.classList.add('hidden');
+
+            // 10 saniyə sonra hər şeyi sön
+            setTimeout(() => {
+                loveText.style.display = 'none';
+                vinylContainer.classList.add('visible');
+            }, 10000);
+        });
+
+        // Fişəng yaratma funksiyası
+        function createFireworks() {
+            const colors = ['#FF0000', '#FF4500', '#FFD700', '#ADFF2F', '#00FF00', '#00CED1', '#0000FF', '#9400D3', '#FF1493'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.left = '50%';
+                    firework.style.top = '50%';
+                    
+                    const angle = (Math.PI * 2 * i) / 50;
+                    const velocity = 100 + Math.random() * 200;
+                    const x = Math.cos(angle) * velocity;
+                    const y = Math.sin(angle) * velocity;
+                    
+                    firework.style.setProperty('--x', x + 'px');
+                    firework.style.setProperty('--y', y + 'px');
+                    
+                    document.body.appendChild(firework);
+                    
+                    setTimeout(() => firework.remove(), 1000);
+                }, i * 10);
+            }
+        }
+
+        let isPlaying = false;
+
+        // Tonearm (qulp) click - toggle
+        tonearm.addEventListener('click', function() {
+            if (!isPlaying) {
+                // İlk dəfə - aç
+                isPlaying = true;
+                
+                // İynəni plakın üstünə gətir
+                tonearm.classList.add('playing');
+                
+                // Plakı fırlat
+                setTimeout(() => {
+                    vinyl.classList.add('spinning');
+                    audioPlayer.play();
+                }, 300);
+                
+                // Plakı kiçilt və sol küncdə yerləşdir
+                setTimeout(() => {
+                    vinylContainer.classList.add('mini');
+                }, 800);
+                
+                // Zərfi göstər
+                setTimeout(() => {
+                    envelopeContainer.classList.add('visible');
+                }, 1500);
+            } else {
+                // İkinci dəfə - bağla
+                envelopeContainer.classList.remove('visible');
+                envelope.classList.remove('open');
+                
+                setTimeout(() => {
+                    vinylContainer.classList.remove('mini');
+                    isPlaying = false;
+                }, 500);
+            }
+        });
+
+        // Zərfə basanda aç
+        envelope.addEventListener('click', function() {
+            envelope.classList.add('open');
+        });
+
+        // Plak click (alternativ)
+        vinyl.addEventListener('click', function() {
+            tonearm.click();
+        });
+
+        // Məktubu bağla (X düyəsi)
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // Zərfi bağla
+            envelope.classList.remove('open');
+            
+            // Qırmızı zərfi gizlət
+            setTimeout(() => {
+                envelopeContainer.classList.remove('visible');
+            }, 600);
+            
+            // Plakı ortaya gətir
+            setTimeout(() => {
+                vinylContainer.classList.remove('mini');
+                isPlaying = false;
+            }, 800);
+        });
+    </script>
+</body>
+</html>
